@@ -1,0 +1,11 @@
+.img-size{
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.vertical-align{
+    display: flex;
+   align-items: center;
+}

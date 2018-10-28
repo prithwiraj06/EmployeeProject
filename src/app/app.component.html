@@ -1,0 +1,16 @@
+<div class="container">
+    <nav class="navbar navbar-primary">
+        <ul class="nav navbar-nav">
+            <li routerLinkActive="active">
+                <a routerLink='employeeList'>Employee List</a>
+            </li>
+            <li routerLinkActive="active">
+                <a routerLink='createEmployee'>Create Employee</a>
+            </li>
+            <li routerLinkActive="active">
+                <a [routerLink]="['/employees',2]">Get Employee By Id</a>
+            </li>
+        </ul>
+    </nav>
+    <router-outlet></router-outlet>
+</div>

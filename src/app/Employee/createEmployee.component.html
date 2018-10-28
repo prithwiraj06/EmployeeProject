@@ -1,0 +1,127 @@
+<form #employeeForm="ngForm" (ngSubmit)="saveEmployee()">
+    <div class="panel panel-primary">
+    <div class="panel-heading">Create Employee</div>
+    <div class="panel-body">
+
+        <div class="form-group" [class.has-error]="name.invalid && name.touched" [class.has-success]="name.valid">
+            <label for="name" class="control-label">Full Name</label>
+            <input type="text" #name="ngModel" required autofocus="autofocus" name="name" id="name" class="form-control" [(ngModel)]="employee.name">
+            <span class="help-block" *ngIf="name.invalid && name.touched">Full name is required</span>
+        </div>
+
+        <div class="form-group"  [class.has-error]="email.invalid" [class.has-success]="email.valid">
+            <label for="email" class="control-label">Email</label>
+            <input type="text" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" #email="ngModel" [required]="contactprefrences.value=='email'" name="email" id="email" class="form-control" [(ngModel)]="employee.email">
+            <span class="help-block" *ngIf="email.errors?.required">Email is required</span>
+            <span class="help-block" *ngIf="email.errors?.pattern && email.touched">Invalid email</span>
+        </div>
+
+        <div class="form-group" [class.has-error]="phonenumber.invalid " [class.has-success]="phonenumber.valid">
+                <label for="contact" class="control-label">Contact Number</label>
+                <input  type="text" [required]="contactprefrences.value=='phone'" #phonenumber="ngModel" name="contact" id="contact" class="form-control" [(ngModel)]="employee.phonenumber">
+                <span class="help-block" *ngIf="phonenumber.invalid">Contact number is required</span>
+        </div>
+
+        <div class="form-group" [class.has-error]="contactprefrences.invalid && contactprefrences.touched" [class.has-success]="contactprefrences.valid">
+                <label class="control-label">Contact Prefrences</label>
+                <div class="form-control">
+                    <label class="radio-inline" class="control-label">
+                        <input #contactprefrences="ngModel" required type="radio" name="prefrences" value="email" [(ngModel)]="employee.contactprefrences"> Email
+                    </label>
+                    <label class="radio-inline" class="control-label">&nbsp;
+                            <input #contactprefrences="ngModel" required type="radio" name="prefrences" value="phone" [(ngModel)]="employee.contactprefrences"> Phone Number
+                    </label>                    
+                </div>
+                <span class="help-block" *ngIf="contactprefrences.invalid && contactprefrences.touched">Contact prefrences is required</span> 
+        
+            </div>
+
+        <div class="form-group" [class.has-error]="gender.invalid && gender.touched" [class.has-success]="gender.valid">
+                <label  class="control-label">Gender</label>
+                <div class="form-control">
+                    <label class="radio-inline" class="control-label">
+                        <input #gender="ngModel" required type="radio" name="gender" value="male" [(ngModel)]="employee.gender"> Male
+                    </label>
+                    <label class="radio-inline" class="control-label">&nbsp;
+                        <input #gender="ngModel" required type="radio" name="gender" value="female" [(ngModel)]="employee.gender"> Female
+                    </label>                    
+                </div>
+                <span class="help-block" *ngIf="gender.invalid && gender.touched">Gender is required</span>      
+        </div>
+
+        <div class="form-group" [class.has-error]="isactive.invalid && isactive.touched" [class.has-success]="isactive.valid">           
+            <div class="form-control">
+                <label class="checkbox-inline" class="control-label">
+                    <input type="checkbox" [required]="employee.isactive==null" #isactive="ngModel" name="isActive" [(ngModel)]="employee.isactive"> Is Active
+                </label>                 
+            </div>
+            <span class="help-block" *ngIf="isactive.invalid && isactive.touched">Is active is required</span>           
+    </div>
+
+    <div class="form-group" [class.has-error]="department.invalid && department.touched" [class.has-success]="department.valid">    
+         <label for="department" class="control-label">
+             Department
+        </label>               
+        <select appSelectValidator="0" class="form-control" [(ngModel)]="employee.department" id="department" name="department" #department="ngModel">
+            <option value="0">Select</option>
+            <option *ngFor="let dept of departments" [value]="dept.id">{{dept.name}}</option>                
+        </select>  
+        <span class="help-block" *ngIf="department.invalid && department.touched">Department is required</span>     
+    </div>
+
+    <div class="row">
+    <div class="form-group col-md-5" [class.has-error]="dateofbirth.touched && dateofbirth.invalid" [class.has-success]="dateofbirth.valid">      
+        <label for="dateOfBirth" class="control-label">
+         Date of birth
+        </label>               
+        <input type="text"  required #dateofbirth="ngModel" bsDatepicker [bsConfig]="bsdatepickerconfig" placement="right" class="form-control" [(ngModel)]="employee.dateofbirth" id="dateOfBirth" name="dateOfBirth">
+        <span class="help-block" *ngIf="dateofbirth.touched && dateofbirth.invalid">Date of birth is required</span>
+     </div>  
+     
+    </div>
+
+    <div class="form-group">    
+        <label for="employeePhotoPath">
+         Employee Photo
+        </label>               
+        <input #imagePath="ngModel" type="text" id="imagePath" name="imagePath" [(ngModel)]="employee.imagePath" class="form-control">             
+    </div>
+
+    <div class="form-group"> 
+        <button type="button" (click)="toggleImage()" class="btn btn-success">
+            {{photoPath ? "Hide" : "Show"}} preview
+        </button>        
+    </div>
+
+    <div class="form-group">
+        <img [src]="employee.imagePath" width="200" height="200" *ngIf="photoPath" alt=" Image not available please try with correct path">
+    </div>
+
+    <div ngModelGroup="passwordGroup" appConfirmPasswordMatch #passwordGroup="ngModelGroup" [class.has-error]="passwordGroup.errors?.notEqual && !confirmpassword.errors?.required">
+
+        <div class="form-group" [class.has-error]="password.invalid && password.touched" [class.has-success]="password.valid">
+            <label for="password" class="control-label">Password</label>
+            <input type="text" #password="ngModel" required  name="password" id="password" class="form-control" [(ngModel)]="employee.password">
+            <span class="help-block" *ngIf="password.invalid && password.touched">Password is required</span>
+        </div>
+
+        <div class="form-group" [class.has-error]="confirmpassword.invalid && confirmpassword.touched" [class.has-success]="confirmpassword.valid">
+            <label for="confirmpassword" class="control-label">Confirm Password</label>
+            <input type="text" #confirmpassword="ngModel" required  name="confirmpassword" id="confirmpassword" class="form-control" [(ngModel)]="employee.confirmpassword">
+            <span class="help-block" *ngIf="confirmpassword.errors?.required && confirmpassword.touched">
+                Confirm password is required</span>
+            <span class="help-block" *ngIf="confirmpassword.touched && passwordGroup.errors?.notEqual && !confirmpassword.errors?.required">
+                Password and confirm password does not match</span>
+        </div>
+
+    </div>
+
+  </div>
+    <div class="panel-footer" style="border-left:1px solid blue">
+        <button class="btn btn-primary" [disabled]="employeeForm.invalid"  type="submit">Save Employee</button>
+    </div>
+</div>
+</form>
+Angular Generated Forms Model Values: {{employeeForm.value | json}}
+<br><br>
+Our Employee Model Generated Values : {{employee | json}}

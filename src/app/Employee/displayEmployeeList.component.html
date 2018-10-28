@@ -1,0 +1,64 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h4 class="panel-title">{{employee.name}}</h4>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-10">
+            <div class="row vertical-align">
+                <div class="col-md-4">
+                    <img class="img-size" [src]="employee.imagePath"alt="No Photo" >
+                </div>
+                <div class="col-md-8" >
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="control-label">Employee Id</label>
+                        </div>
+                        <div class="col-md-6">{{employee.id}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="control-label">Employee Gender</label>
+                        </div>
+                        <div class="col-md-6">{{employee.gender}}</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="control-label">Employee Date of birth</label>
+                        </div>
+                        <div class="col-md-6">{{employee.dateofbirth | date:'MMMM-dd-yyyy'}}</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="control-label">Employee Phone Number</label>
+                        </div>
+                        <div class="col-md-6">{{employee.phonenumber}}</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="control-label">Employee Email</label>
+                        </div>
+                        <div class="col-md-6">{{employee.email}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="control-label">Employee Departmnet</label>
+                        </div>
+                        <div class="col-md-6">
+                            <span [ngSwitch]="employee.department">
+                                <span *ngSwitchCase="1">HR</span>
+                                <span *ngSwitchCase="2">IT</span>
+                                <span *ngSwitchCase="3">Finance</span>
+                                <span *ngSwitchCase="4">Admin</span>
+                                <span *ngSwitchDefault>No Department matched</span>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
